@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+.container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ===== LOGO SECTION ===== */
+.logo {
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    z-index: 10;
+}
+
+.logo-image {
+    height: 40px;
+    width: auto;
+}
+
+/* ===== MAIN CONTENT SECTION ===== */
+.main-content {
+    position: relative;
+    z-index: 5;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 40px 400px;
+}
+
+/* ===== TITLE SECTION ===== */
+.title {
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    letter-spacing: -5px;
+    color: #fff;
+}
+
+.title-highlight {
+    color: #22C55E;
+}
+
+/* ===== DESCRIPTION SECTION ===== */
+.description {
+    font-size: 20px;
+    line-height: 1.6;
+    color: #e0e0e0;
+    max-width: 1000px;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+/* ===== BUTTON GROUP SECTION ===== */
+.button-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ===== BASE BUTTON STYLES ===== */
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== CLASSIFY BUTTON (Phân loại rác) ===== */
+.btn-classify {
+    background: #22C55E;
+    color: #000;
+}
+
+.btn-classify:hover {
+    background: #00e67a;
+}
+
+.btn-icon-classify {
+    width: 30px;
+    height: 30px;
+}
+
+.btn-text-classify {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* ===== LOCATION BUTTON (Điểm thu gom) ===== */
+.btn-location {
+    background: transparent;
+    color: #22C55E;
+    border: 2px solid #22C55E;
+}
+
+.btn-location:hover {
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.btn-icon-location {
+    width: 23px;
+    height: 30px;
+}
+
+.btn-text-location {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* ===== BACKGROUND GRID SECTION ===== */
+.background-grid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50vh;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.background-grid-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+    opacity: 0.8;
+}

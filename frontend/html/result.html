@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết Quả Phân Loại - RecyGo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/result.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-button">
+            <img src="../images/arrow.png" alt="Back" class="back-icon">
+        </button>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Title Section -->
+            <div class="title-section">
+                <img src="../images/recy.png" alt="Recycle" class="title-icon">
+                <h1 class="title">
+                    <span class="title-highlight">Phân Loại Rác</span>
+                </h1>
+            </div>
+            
+            <p class="description">
+                Tải lên hình ảnh rác thải để hệ thống AI của chúng tôi phân loại và đưa ra gợi ý xử lý.
+            </p>
+
+            <!-- Upload Area -->
+            <div class="upload-container">
+                <div class="upload-box">
+                    <img src="../images/upload.png" alt="Upload" class="upload-icon">
+                    
+                    <div class="upload-text-container">
+                        <p class="upload-text-main">
+                            Kéo và thả ảnh hoặc <span class="upload-text-highlight">tải lên từ thiết bị</span>
+                        </p>
+                        <p class="upload-text-sub">
+                            Hỗ trợ định dạng: JPG, PNG, WEBP (tối đa 5MB)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="two-column-layout">
+                <!-- LEFT COLUMN: Result -->
+                <div class="left-column">
+                    <h2 class="column-title">Kết quả phân loại</h2>
+                    
+                    <div class="result-card" id="resultCard">
+                        <div class="result-image-container">
+                            <img src="../images/sample-bottle.jpg" alt="Result" class="result-image" id="resultImage">
+                        </div>
+                        
+                        <div class="result-details">
+                            <p class="result-label">LOẠI RÁC</p>
+                            <h3 class="result-type" id="resultType">Tái chế</h3>
+                            <p class="result-text" id="resultText">
+                                Vật thể được xác định là <strong>Chai nhựa PET</strong>
+                            </p>
+                            <button class="result-button" id="resultButton">
+                                <img src="../images/recy.png" alt="Icon" class="result-button-icon">
+                                <span>Có thể tái chế</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Suggestions -->
+                <div class="right-column">
+                    <h2 class="column-title" id="suggestionsTitle">Gợi ý cách tái chế</h2>
+                    
+                    <div class="suggestions-container" id="suggestionsContainer">
+                        <!-- Suggestion 1 -->
+                        <div class="suggestion-card">
+                            <img src="../images/suggestion-1.jpg" alt="Suggestion" class="suggestion-image">
+                            <div class="suggestion-content">
+                                <h4 class="suggestion-heading">Làm đồ trang trí tại nhà</h4>
+                                <p class="suggestion-text">
+                                    Biến chai nhựa cũ thành chậu cây, đèn lồng hoặc các vật dụng trang trí độc đáo khác.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Suggestion 2 -->
+                        <div class="suggestion-card">
+                            <img src="../images/suggestion-2.jpg" alt="Suggestion" class="suggestion-image">
+                            <div class="suggestion-content">
+                                <h4 class="suggestion-heading">Làm đồ trang trí tại nhà</h4>
+                                <p class="suggestion-text">
+                                    Biến chai nhựa cũ thành chậu cây, đèn lồng hoặc các vật dụng trang trí độc đáo khác.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Suggestion 3 -->
+                        <div class="suggestion-card">
+                            <img src="../images/suggestion-3.jpg" alt="Suggestion" class="suggestion-image">
+                            <div class="suggestion-content">
+                                <h4 class="suggestion-heading">Làm đồ trang trí tại nhà</h4>
+                                <p class="suggestion-text">
+                                    Biến chai nhựa cũ thành chậu cây, đèn lồng hoặc các vật dụng trang trí độc đáo khác.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/result.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Loại Rác - RecyGo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/classify.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-button">
+            <img src="../images/arrow.png" alt="Back" class="back-icon">
+        </button>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Title Section -->
+            <div class="title-section">
+                <img src="../images/recy.png" alt="Recycle" class="title-icon">
+                <h1 class="title">
+                    <span class="title-highlight">Phân Loại Rác</span>
+                </h1>
+            </div>
+            
+            <p class="description">
+                Tải lên hình ảnh rác thải để hệ thống AI của chúng tôi phân loại và đưa ra gợi ý xử lý.
+            </p>
+
+            <!-- Upload Area -->
+            <div class="upload-container">
+                <div class="upload-box">
+                    <img src="../images/upload.png" alt="Upload" class="upload-icon">
+                    
+                    <div class="upload-text-container">
+                        <p class="upload-text-main">
+                            Kéo và thả ảnh hoặc <span class="upload-text-highlight">tải lên từ thiết bị</span>
+                        </p>
+                        <p class="upload-text-sub">
+                            Hỗ trợ định dạng: JPG, PNG, WEBP (tối đa 5MB)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Processing Section (Hidden by default) -->
+                <div class="processing-section">
+                    <div class="processing-spinner"></div>
+                    <p class="processing-text">Đang phân tích hình ảnh...</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p class="processing-note">Quá trình này có thể mất vài giây. Vui lòng đợi.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/classify.js"></script>
+</body>
+</html>
