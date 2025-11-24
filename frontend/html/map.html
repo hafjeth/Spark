@@ -1,677 +1,115 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tìm điểm thu gom rác</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #6b7280;
-            color: white;
-            overflow: hidden;
-        }
-
-        .container {
-            display: flex;
-            height: 100vh;
-        }
-
-        /* Left Panel */
-        .left-panel {
-            width: 440px;
-            background: #1f2937;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header {
-            padding: 20px;
-        }
-
-        .back-button {
-            width: 40px;
-            height: 40px;
-            background: #111827;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            margin-bottom: 24px;
-            transition: background 0.3s;
-            color: white;
-        }
-
-        .back-button:hover {
-            background: #374151;
-        }
-
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4ade80;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: #9ca3af;
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .search-box {
-            position: relative;
-            margin-bottom: 24px;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6b7280;
-            width: 20px;
-            height: 20px;
-        }
-
-        .search-input {
-            width: 100%;
-            background: #111827;
-            border: none;
-            padding: 12px 16px 12px 48px;
-            border-radius: 8px;
-            color: white;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .search-input::placeholder {
-            color: #6b7280;
-        }
-
-        .search-input:focus {
-            box-shadow: 0 0 0 2px #4ade80;
-        }
-
-        .filter-section h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: white;
-        }
-
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .filter-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: none;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #374151;
-            color: #d1d5db;
-        }
-
-        .filter-btn:hover {
-            background: #4b5563;
-        }
-
-        .filter-btn.active {
-            background: #4ade80;
-            color: white;
-        }
-
-        .filter-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .location-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0 20px 20px;
-        }
-
-        .location-card {
-            background: #000;
-            border: 2px solid #374151;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .location-card:hover, .location-card.selected {
-            border-color: #4ade80;
-        }
-
-        .location-card.status-open {
-            background: rgba(34, 197, 94, 0.2);
-            border-color: rgba(74, 222, 128, 0.5);
-        }
-
-        .location-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            align-items: flex-start;
-        }
-
-        .location-name {
-            font-weight: 600;
-            font-size: 15px;
-            color: white;
-        }
-
-        .location-distance {
-            color: #4ade80;
-            font-size: 14px;
-            font-weight: 500;
-            flex-shrink: 0;
-        }
-
-        .location-address {
-            color: #9ca3af;
-            font-size: 13px;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .location-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .status {
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .status.open { color: #4ade80; }
-        .status.closing { color: #fbbf24; }
-        .status.closed { color: #ef4444; }
-
-        .services {
-            display: flex;
-            gap: 6px;
-        }
-
-        .service-icon {
-            width: 18px;
-            height: 18px;
-            color: #9ca3af;
-        }
-
-        /* Right Panel */
-        .right-panel {
-            flex: 1;
-            background: #4b5563;
-            position: relative;
-        }
-
-        .map-marker {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-
-        .map-marker:hover {
-            transform: scale(1.1);
-        }
-
-        .map-marker.status-open {
-            background: #4ade80;
-        }
-
-        .map-marker.status-closing,
-        .map-marker.status-closed {
-            background: #4b5563;
-        }
-
-        .map-marker svg {
-            width: 22px;
-            height: 22px;
-            color: white;
-        }
-
-        .location-detail {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            width: 320px;
-            background: #1f2937;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
-            display: none;
-        }
-
-        .location-detail.show {
-            display: block;
-        }
-
-        .detail-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 4px;
-            color: white;
-        }
-
-        .detail-subtitle {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: white;
-        }
-
-        .detail-address {
-            color: #9ca3af;
-            font-size: 13px;
-            margin-bottom: 16px;
-            line-height: 1.4;
-        }
-
-        .status-box {
-            background: #111827;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 16px;
-        }
-
-        .status-box .status {
-            font-weight: 600;
-            margin-bottom: 4px;
-            font-size: 14px;
-        }
-
-        .status-box .hours {
-            color: #9ca3af;
-            font-size: 13px;
-        }
-
-        .detail-services h4 {
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: white;
-            font-size: 15px;
-        }
-
-        .service-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .service-tag {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            border: none;
-            cursor: default;
-        }
-
-        .service-tag svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .service-tag.active {
-            background: #4ade80;
-            color: white;
-        }
-
-        .service-tag.inactive {
-            background: #374151;
-            color: #d1d5db;
-        }
-
-        /* Map Controls */
-        .map-controls {
-            position: absolute;
-            bottom: 120px;
-            right: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .control-btn {
-            width: 48px;
-            height: 48px;
-            background: #1f2937;
-            border: none;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.3s;
-            color: white;
-        }
-
-        .control-btn:hover {
-            background: #374151;
-        }
-
-        .control-btn svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Navigation Button */
-        .nav-button {
-            position: absolute;
-            bottom: 24px;
-            right: 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: #3b82f6;
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            font-size: 15px;
-        }
-
-        .nav-button:hover {
-            background: #2563eb;
-        }
-
-        .nav-button svg {
-            width: 20px;
-            height: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Left Panel -->
-        <div class="left-panel">
-            <div class="header">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tìm Điểm Thu Gom Rác</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../css/map.css">
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initGoogleMaps"></script>
+        <script src="../js/map.js" defer></script>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Left Panel -->
+            <div class="left-panel">
                 <button class="back-button">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
++                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M19 12H6" />
+                        <path d="M12 19L5 12L12 5" />
                     </svg>
                 </button>
-                
-                <h1 class="title">Tìm điểm thu gom rác</h1>
-                <p class="subtitle">Nhập địa chỉ để tìm địa điểm thu gom tài chế gần bạn</p>
-                
+
+                <h1 class="panel-title">Tìm điểm thu gom rác</h1>
+                <p class="panel-subtitle">Nhập địa chỉ để tìm địa điểm thu gom tái chế gần bạn</p>
+
                 <div class="search-box">
-                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
                     </svg>
-                    <input type="text" class="search-input" placeholder="Nhập địa chỉ, quận, thành phố...">
+                    <input type="text" id="searchInput" placeholder="Nhập địa chỉ, quận, thành phố...">
                 </div>
 
                 <div class="filter-section">
-                    <h3>Chọn loại rác</h3>
-                    <div class="filters" id="filters"></div>
-                </div>
-            </div>
-
-            <div class="location-list" id="locationList"></div>
-        </div>
-
-        <!-- Right Panel -->
-        <div class="right-panel">
-            <div id="mapMarkers"></div>
-
-            <div class="location-detail" id="locationDetail">
-                <h2 class="detail-title">Chi tiết địa điểm</h2>
-                <h3 class="detail-subtitle" id="detailName"></h3>
-                <p class="detail-address" id="detailAddress"></p>
-                
-                <div class="status-box">
-                    <div class="status" id="detailStatus"></div>
-                    <div class="hours" id="detailHours"></div>
-                </div>
-
-                <div class="detail-services">
-                    <h4>Loại rác tiếp nhận</h4>
-                    <div class="service-tags" id="detailServices"></div>
-                </div>
-            </div>
-
-            <div class="map-controls">
-                <button class="control-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                    </svg>
-                </button>
-                <button class="control-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
-                    </svg>
-                </button>
-                <button class="control-btn">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    </svg>
-                </button>
-            </div>
-
-            <button class="nav-button">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                </svg>
-                Chỉ đường
-            </button>
-        </div>
-    </div>
-
-    <script>
-        // Dữ liệu JSON
-        const locationData = [
-            {
-                id: 1,
-                name: 'Trung tâm tái chế trung tâm',
-                address: '123 Đường Hàng Xanh, Phường X, Quận Y',
-                distance: '1.2 km',
-                status: 'open',
-                statusText: 'Đang mở',
-                closingTime: 'Đóng cửa lúc 17:00',
-                hours: '8:00 - 17:00',
-                services: ['recycle', 'paper'],
-                mapPosition: { top: '45%', left: '60%' }
-            },
-            {
-                id: 2,
-                name: 'Trung tâm tái chế trung tâm',
-                address: '123 Đường Hàng Xanh, Phường X, Quận Y',
-                distance: '1.2 km',
-                status: 'closing',
-                statusText: 'Sắp đóng cửa',
-                closingTime: 'Đóng cửa lúc 20:00',
-                hours: '8:00 - 20:00',
-                services: ['recycle', 'paper'],
-                mapPosition: { top: '55%', left: '58%' }
-            },
-            {
-                id: 3,
-                name: 'Trung tâm tái chế trung tâm',
-                address: '123 Đường Hàng Xanh, Phường X, Quận Y',
-                distance: '1.2 km',
-                status: 'closed',
-                statusText: 'Đã đóng cửa',
-                hours: '8:00 - 17:00',
-                services: ['electronic', 'paper'],
-                mapPosition: { top: '68%', left: '57%' }
-            }
-        ];
-
-        const filterData = [
-            { id: 'all', label: 'Tất cả', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
-            { id: 'recycle', label: 'Nhựa', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' },
-            { id: 'electronic', label: 'Thủy tinh', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
-            { id: 'tv', label: 'Điện tử', icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
-            { id: 'paper', label: 'Giấy', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' }
-        ];
-
-        const serviceIcons = {
-            recycle: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
-            electronic: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
-            paper: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
-        };
-
-        const serviceLabels = {
-            recycle: 'Nhựa',
-            electronic: 'Thủy tinh',
-            paper: 'Giấy'
-        };
-
-        let selectedFilters = ['all'];
-        let selectedLocation = null;
-
-        // Render filters
-        function renderFilters() {
-            const filtersContainer = document.getElementById('filters');
-            filtersContainer.innerHTML = filterData.map(filter => `
-                <button class="filter-btn ${selectedFilters.includes(filter.id) ? 'active' : ''}" onclick="toggleFilter('${filter.id}')">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${filter.icon}"/>
-                    </svg>
-                    ${filter.label}
-                </button>
-            `).join('');
-        }
-
-        // Render location list
-        function renderLocationList() {
-            const listContainer = document.getElementById('locationList');
-            listContainer.innerHTML = locationData.map(location => `
-                <div class="location-card ${location.status === 'open' ? 'status-open' : ''} ${selectedLocation?.id === location.id ? 'selected' : ''}" 
-                     onclick="selectLocation(${location.id})">
-                    <div class="location-header">
-                        <div class="location-name">${location.name}</div>
-                        <div class="location-distance">${location.distance}</div>
-                    </div>
-                    <div class="location-address">${location.address}</div>
-                    <div class="location-footer">
-                        <div class="status ${location.status}">${location.statusText}${location.closingTime ? ' • ' + location.closingTime : ''}</div>
-                        <div class="services">
-                            ${location.services.map(service => `
-                                <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${serviceIcons[service]}"/>
-                                </svg>
-                            `).join('')}
-                        </div>
+                    <h3 class="filter-title">Chọn loại rác</h3>
+                    <div class="filter-pills">
+                        <button class="pill active" data-type="all">
+                            <span>🔄</span>
+                            Tất cả
+                        </button>
+                        <button class="pill" data-type="plastic">
+                            <span>🧴</span>
+                            Nhựa
+                        </button>
+                        <button class="pill" data-type="seafood">
+                            <span>🦐</span>
+                            Thủy tinh
+                        </button>
+                        <button class="pill" data-type="electronics">
+                            <span>📱</span>
+                            Điện tử
+                        </button>
+                        <button class="pill" data-type="paper">
+                            <span>📄</span>
+                            Giấy
+                        </button>
                     </div>
                 </div>
-            `).join('');
-        }
 
-        // Render map markers
-        function renderMapMarkers() {
-            const markersContainer = document.getElementById('mapMarkers');
-            markersContainer.innerHTML = locationData.map(location => `
-                <div class="map-marker status-${location.status}" 
-                     style="top: ${location.mapPosition.top}; left: ${location.mapPosition.left};"
-                     onclick="selectLocation(${location.id})">
-                    <svg fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
-                </div>
-            `).join('');
-        }
+                <div class="location-list" id="locationList"></div>
+            </div>
 
-        // Render location detail
-        function renderLocationDetail() {
-            const detailPanel = document.getElementById('locationDetail');
-            if (!selectedLocation) {
-                detailPanel.classList.remove('show');
-                return;
-            }
-
-            detailPanel.classList.add('show');
-            document.getElementById('detailName').textContent = selectedLocation.name;
-            document.getElementById('detailAddress').textContent = selectedLocation.address;
-            document.getElementById('detailStatus').textContent = selectedLocation.statusText;
-            document.getElementById('detailStatus').className = `status ${selectedLocation.status}`;
-            document.getElementById('detailHours').textContent = `Giờ hoạt động: ${selectedLocation.hours}`;
-            
-            const servicesContainer = document.getElementById('detailServices');
-            servicesContainer.innerHTML = filterData.filter(f => f.id !== 'all').map(filter => {
-                const isActive = selectedLocation.services.includes(filter.id);
-                return `
-                    <button class="service-tag ${isActive ? 'active' : 'inactive'}">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${filter.icon}"/>
+            <!-- Map Area -->
+            <div class="map-area">
+                <div class="map-container" id="mapContainer"></div>
+                <div class="map-controls">
+                    <button class="map-control-btn" id="zoomIn">+</button>
+                    <button class="map-control-btn" id="zoomOut">−</button>
+                    <button class="map-control-btn" id="locate">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <circle cx="12" cy="12" r="3" fill="white"/>
+                            <path d="M12 2V5M12 19V22M22 12H19M5 12H2" stroke="white" stroke-width="2" stroke-linecap="round"/>
                         </svg>
-                        ${filter.label}
                     </button>
-                `;
-            }).join('');
-        }
+                </div>
+            </div>
 
-        // Toggle filter
-        function toggleFilter(filterId) {
-            if (filterId === 'all') {
-                selectedFilters = ['all'];
-            } else {
-                selectedFilters = selectedFilters.filter(f => f !== 'all');
-                if (selectedFilters.includes(filterId)) {
-                    selectedFilters = selectedFilters.filter(f => f !== filterId);
-                } else {
-                    selectedFilters.push(filterId);
-                }
-                if (selectedFilters.length === 0) {
-                    selectedFilters = ['all'];
-                }
-            }
-            renderFilters();
-        }
+            <!-- Right Panel -->
+            <div class="right-panel" id="rightPanel">
+                <h2 class="detail-title">Chi tiết địa điểm</h2>
+                <h3 class="detail-section-title" id="detailName">Trung tâm tái chế trung tâm</h3>
+                <p class="detail-address" id="detailAddress">123 Đường Hàng Xanh, Phường X, Quận Y</p>
 
-        // Select location
-        function selectLocation(locationId) {
-            selectedLocation = locationData.find(loc => loc.id === locationId);
-            renderLocationList();
-            renderLocationDetail();
-        }
+                <div class="status-box">
+                    <div class="status-label">Đang mở</div>
+                    <div class="status-time" id="detailHours">Giờ hoạt động: 8:00 - 17:00</div>
+                </div>
 
-        // Initialize
-        renderFilters();
-        renderLocationList();
-        renderMapMarkers();
-        selectLocation(1); // Select first location by default
-    </script>
-</body>
+                <h4 class="waste-types-title">Loại rác tiếp nhận</h4>
+                <div class="waste-types" id="detailTypes">
+                    <span class="waste-pill">
+                        <span>🧴</span>
+                        Nhựa
+                    </span>
+                    <span class="waste-pill">
+                        <span>🦐</span>
+                        Thủy tinh
+                    </span>
+                    <span class="waste-pill">
+                        <span>📄</span>
+                        Giấy
+                    </span>
+                </div>
+
+                <button class="directions-btn" id="directionsBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                        <path d="M9 11L12 14L22 4M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                    Chỉ đường
+                </button>
+            </div>
+        </div>
+    </body>
 </html>

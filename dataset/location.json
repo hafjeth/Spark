@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Trung tâm tái chế trung tâm",
+        "address": "123 Đường Hàng Xanh, Phường X, Quận Y",
+        "distance": 1.2,
+        "status": "open",
+        "closeTime": "17:00",
+        "hours": "8:00 - 17:00",
+        "types": ["plastic", "seafood", "paper"],
+        "lat": 45,
+        "lng": 40
+    },
+    {
+        "id": 2,
+        "name": "Trung tâm tái chế trung tâm",
+        "address": "123 Đường Hàng Xanh, Phường X, Quận Y",
+        "distance": 1.2,
+        "status": "closing",
+        "closeTime": "20:00",
+        "hours": "8:00 - 20:00",
+        "types": ["plastic", "electronics"],
+        "lat": 55,
+        "lng": 50
+    },
+    {
+        "id": 3,
+        "name": "Trung tâm tái chế trung tâm",
+        "address": "123 Đường Hàng Xanh, Phường X, Quận Y",
+        "distance": 1.2,
+        "status": "closed",
+        "closeTime": "",
+        "hours": "Đã đóng cửa",
+        "types": ["electronics", "paper"],
+        "lat": 35,
+        "lng": 60
+    }
+]
