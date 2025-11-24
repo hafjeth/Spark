@@ -142,6 +142,7 @@
         align-items: center;
         gap: 8px;
         transition: all 0.2s;
+        color: #ffffff;
     }
 
     .pill:hover {
@@ -317,7 +318,7 @@
     .map-control-btn {
         width: 44px;
         height: 44px;
-        background: #4b5563;
+        background: #2f3436;
         border: none;
         border-radius: 8px;
         color: white;
@@ -353,17 +354,18 @@
     .detail-title {
         font-size: 18px;
         font-weight: 700;
-        margin-bottom: 6px;
+        margin-bottom: 15px;
+        color: var(--accent-green)
     }
 
     .detail-section-title {
-        font-size: 20px;
+        font-size: 19px;
         font-weight: 700;
         margin-bottom: 12px;
     }
 
     .detail-address {
-        font-size: 14px;
+        font-size: 13px;
         color: var(--text-secondary);
         margin-bottom: 20px;
     }
@@ -378,7 +380,7 @@
     .status-label {
         font-size: 13px;
         color: var(--text-secondary);
-        margin-bottom: 4px;
+        margin-bottom: 6px;
     }
 
     .status-time {
@@ -460,5 +462,61 @@
 
         .right-panel {
             display: none;
+        }
+    }
+    /* Entrance animations */
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+        from { opacity: 0; transform: scale(0.96); }
+        to   { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+    /* Apply animations on load */
+    .left-panel {
+        animation: fadeUp 420ms cubic-bezier(.2,.9,.2,1) 120ms both;
+    }
+
+    .back-button {
+        animation: scaleIn 300ms cubic-bezier(.2,.9,.2,1) 60ms both;
+    }
+
+    .right-panel {
+        animation: fadeUp 420ms cubic-bezier(.2,.9,.2,1) 220ms both;
+    }
+
+    .map-container {
+        animation: fadeIn 480ms ease 0ms both;
+    }
+    /* Staggered reveal for location cards */
+    .location-list .location-card {
+        opacity: 0;
+        transform: translateY(8px);
+        animation: fadeUp 360ms cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    .location-list .location-card:nth-child(1) { animation-delay: 260ms; }
+    .location-list .location-card:nth-child(2) { animation-delay: 320ms; }
+    .location-list .location-card:nth-child(3) { animation-delay: 380ms; }
+    .location-list .location-card:nth-child(4) { animation-delay: 440ms; }
+    .location-list .location-card:nth-child(5) { animation-delay: 500ms; }
+    .location-list .location-card:nth-child(6) { animation-delay: 560ms; }
+    .location-list .location-card:nth-child(7) { animation-delay: 620ms; }
+    .location-list .location-card:nth-child(8) { animation-delay: 680ms; }
+
+    /* Respect user preference for reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .left-panel, .right-panel, .map-container, .back-button, .location-list .location-card {
+            animation: none !important;
+            transition: none !important;
+            opacity: 1 !important;
+            transform: none !important;
         }
     }
