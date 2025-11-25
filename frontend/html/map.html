@@ -7,8 +7,14 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+        
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        
+        <!-- Leaflet JS -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        
         <link rel="stylesheet" href="../css/map.css">
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initGoogleMaps"></script>
         <script src="../js/map.js" defer></script>
     </head>
     <body>
@@ -16,7 +22,7 @@
             <!-- Left Panel -->
             <div class="left-panel">
                 <button class="back-button">
-+                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M19 12H6" />
                         <path d="M12 19L5 12L12 5" />
                     </svg>
@@ -36,7 +42,7 @@
                     <h3 class="filter-title">Chọn loại rác</h3>
                     <div class="filter-pills">
                         <button class="pill active" data-type="all">
-                            <span>🔄</span>
+                            <span>📋</span>
                             Tất cả
                         </button>
                         <button class="pill" data-type="plastic">
@@ -80,7 +86,7 @@
             <div class="right-panel" id="rightPanel">
                 <h2 class="detail-title">Chi tiết địa điểm</h2>
                 <h3 class="detail-section-title" id="detailName">Trung tâm tái chế trung tâm</h3>
-                <p class="detail-address" id="detailAddress">123 Đường Hàng Xanh, Phường X, Quận Y</p>
+                <p class="detail-address" id="detailAddress">123 Đường Hùng Xanh, Phường X, Quận Y</p>
 
                 <div class="status-box">
                     <div class="status-label">Đang mở</div>

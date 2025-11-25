@@ -1,38 +1,82 @@
 [
     {
         "id": 1,
-        "name": "Trung tâm tái chế trung tâm",
-        "address": "123 Đường Hàng Xanh, Phường X, Quận Y",
-        "distance": 1.2,
-        "status": "open",
+        "name": "Trung tâm tái chế Quận 1",
+        "address": "123 Đường Lê Lợi, Phường Bến Nghé, Quận 1",
+        "lat": 10.7756,
+        "lng": 106.7019,
+        "openTime": "08:00",
         "closeTime": "17:00",
-        "hours": "8:00 - 17:00",
-        "types": ["plastic", "seafood", "paper"],
-        "lat": 45,
-        "lng": 40
+        "types": ["plastic", "seafood", "paper"]
     },
     {
         "id": 2,
-        "name": "Trung tâm tái chế trung tâm",
-        "address": "123 Đường Hàng Xanh, Phường X, Quận Y",
-        "distance": 1.2,
-        "status": "closing",
+        "name": "Điểm thu gom Quận 3",
+        "address": "456 Đường Nam Kỳ Khởi Nghĩa, Phường 7, Quận 3",
+        "lat": 10.7869,
+        "lng": 106.6887,
+        "openTime": "08:00",
         "closeTime": "20:00",
-        "hours": "8:00 - 20:00",
-        "types": ["plastic", "electronics"],
-        "lat": 55,
-        "lng": 50
+        "types": ["plastic", "electronics"]
     },
     {
         "id": 3,
-        "name": "Trung tâm tái chế trung tâm",
-        "address": "123 Đường Hàng Xanh, Phường X, Quận Y",
-        "distance": 1.2,
-        "status": "closed",
-        "closeTime": "",
-        "hours": "Đã đóng cửa",
-        "types": ["electronics", "paper"],
-        "lat": 35,
-        "lng": 60
+        "name": "Trung tâm tái chế Bình Thạnh",
+        "address": "789 Đường Xô Viết Nghệ Tĩnh, Phường 25, Bình Thạnh",
+        "lat": 10.8117,
+        "lng": 106.7105,
+        "openTime": "08:00",
+        "closeTime": "18:00",
+        "types": ["electronics", "paper"]
+    },
+    {
+        "id": 4,
+        "name": "Điểm thu gom Phú Nhuận",
+        "address": "234 Đường Phan Xích Long, Phường 2, Phú Nhuận",
+        "lat": 10.7993,
+        "lng": 106.6821,
+        "openTime": "07:00",
+        "closeTime": "19:00",
+        "types": ["plastic", "paper", "electronics"]
+    },
+    {
+        "id": 5,
+        "name": "Trung tâm tái chế Quận 10",
+        "address": "567 Đường 3 Tháng 2, Phường 12, Quận 10",
+        "lat": 10.7722,
+        "lng": 106.6678,
+        "openTime": "08:00",
+        "closeTime": "17:00",
+        "types": ["seafood", "electronics", "paper"]
+    },
+    {
+        "id": 6,
+        "name": "Điểm thu gom Tân Bình",
+        "address": "890 Đường Hoàng Văn Thụ, Phường 4, Tân Bình",
+        "lat": 10.7993,
+        "lng": 106.6532,
+        "openTime": "08:00",
+        "closeTime": "20:00",
+        "types": ["plastic", "seafood"]
+    },
+    {
+        "id": 7,
+        "name": "Trung tâm tái chế Quận 7",
+        "address": "321 Đường Nguyễn Hữu Thọ, Phường Tân Hưng, Quận 7",
+        "lat": 10.7352,
+        "lng": 106.7191,
+        "openTime": "08:00",
+        "closeTime": "18:00",
+        "types": ["electronics", "paper"]
+    },
+    {
+        "id": 8,
+        "name": "Điểm thu gom Gò Vấp",
+        "address": "654 Đường Quang Trung, Phường 10, Gò Vấp",
+        "lat": 10.8376,
+        "lng": 106.6672,
+        "openTime": "07:00",
+        "closeTime": "19:00",
+        "types": ["plastic", "seafood", "paper", "electronics"]
     }
 ]
