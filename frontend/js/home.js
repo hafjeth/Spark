@@ -34,7 +34,7 @@ function handleClassifyClick() {
 function handleLocationClick() {
     console.log('Điểm thu gom button clicked');
     // Navigate to location page
-    window.location.href = 'location.html';
+    window.location.href = 'map.html';
 }
 
 // ===== FUNCTION: Page Load Animation =====
