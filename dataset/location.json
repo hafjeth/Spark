@@ -1,82 +1,162 @@
 [
     {
         "id": 1,
-        "name": "Trung tâm tái chế Quận 1",
-        "address": "123 Đường Lê Lợi, Phường Bến Nghé, Quận 1",
-        "lat": 10.7756,
-        "lng": 106.7019,
-        "openTime": "08:00",
-        "closeTime": "17:00",
-        "types": ["plastic", "seafood", "paper"]
+        "name": "Điểm đặt máy Botol – Annam Gourmet",
+        "address": "41 Thảo Điền, P. Thảo Điền",
+        "lat": 10.8037,
+        "lng": 106.7408,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
     },
     {
         "id": 2,
-        "name": "Điểm thu gom Quận 3",
-        "address": "456 Đường Nam Kỳ Khởi Nghĩa, Phường 7, Quận 3",
-        "lat": 10.7869,
-        "lng": 106.6887,
-        "openTime": "08:00",
-        "closeTime": "20:00",
-        "types": ["plastic", "electronics"]
+        "name": "Điểm đặt máy Botol – Annam Gourmet TD Green",
+        "address": "192 Nguyễn Văn Hưởng, Thảo Điền",
+        "lat": 10.8069,
+        "lng": 106.7449,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
     },
     {
         "id": 3,
-        "name": "Trung tâm tái chế Bình Thạnh",
-        "address": "789 Đường Xô Viết Nghệ Tĩnh, Phường 25, Bình Thạnh",
-        "lat": 10.8117,
-        "lng": 106.7105,
-        "openTime": "08:00",
-        "closeTime": "18:00",
-        "types": ["electronics", "paper"]
+        "name": "Điểm đặt máy Botol – Annam Gourmet Feliz En Vista",
+        "address": "Feliz En Vista, Phan Văn Đăng, P. Thạnh Mỹ Lợi",
+        "lat": 10.8095,
+        "lng": 106.7611,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
     },
     {
         "id": 4,
-        "name": "Điểm thu gom Phú Nhuận",
-        "address": "234 Đường Phan Xích Long, Phường 2, Phú Nhuận",
-        "lat": 10.7993,
-        "lng": 106.6821,
-        "openTime": "07:00",
-        "closeTime": "19:00",
-        "types": ["plastic", "paper", "electronics"]
+        "name": "Điểm đặt máy Botol – Annam Gourmet Q2",
+        "address": "21 Vô Trường Toản, An Phú",
+        "lat": 10.8005,
+        "lng": 106.7375,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
     },
     {
         "id": 5,
-        "name": "Trung tâm tái chế Quận 10",
-        "address": "567 Đường 3 Tháng 2, Phường 12, Quận 10",
-        "lat": 10.7722,
-        "lng": 106.6678,
-        "openTime": "08:00",
-        "closeTime": "17:00",
-        "types": ["seafood", "electronics", "paper"]
+        "name": "Điểm đặt máy Botol – Chung cư LA Astoria 2",
+        "address": "383 Đ. Nguyễn Duy Trinh, P",
+        "lat": 10.8143,
+        "lng": 106.7753,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
     },
     {
         "id": 6,
-        "name": "Điểm thu gom Tân Bình",
-        "address": "890 Đường Hoàng Văn Thụ, Phường 4, Tân Bình",
-        "lat": 10.7993,
-        "lng": 106.6532,
-        "openTime": "08:00",
-        "closeTime": "20:00",
-        "types": ["plastic", "seafood"]
+        "name": "Điểm đặt máy Botol – Đại học Mở (cơ sở 1)",
+        "address": "97 Võ Văn Tần, P.6",
+        "lat": 10.7834,
+        "lng": 106.6942,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
     },
     {
         "id": 7,
-        "name": "Trung tâm tái chế Quận 7",
-        "address": "321 Đường Nguyễn Hữu Thọ, Phường Tân Hưng, Quận 7",
-        "lat": 10.7352,
-        "lng": 106.7191,
-        "openTime": "08:00",
-        "closeTime": "18:00",
-        "types": ["electronics", "paper"]
+        "name": "Điểm đặt máy Botol – Đại học Kinh tế TP HCM (cơ sở A)",
+        "address": "59C Nguyễn Đình Chiểu, P.6",
+        "lat": 10.7921,
+        "lng": 106.6953,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
     },
     {
         "id": 8,
-        "name": "Điểm thu gom Gò Vấp",
-        "address": "654 Đường Quang Trung, Phường 10, Gò Vấp",
-        "lat": 10.8376,
-        "lng": 106.6672,
-        "openTime": "07:00",
-        "closeTime": "19:00",
-        "types": ["plastic", "seafood", "paper", "electronics"]
+        "name": "Điểm đặt máy Botol – Đại học Mở (cơ sở 3)",
+        "address": "Khu dân cư Nhà Bè",
+        "lat": 10.6908,
+        "lng": 106.7165,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
+    },
+    {
+        "id": 9,
+        "name": "Điểm đặt máy Botol – Annam Gourmet Riverpark Premier",
+        "address": "64-70 Nguyễn Đức Cảnh, Tân Phong",
+        "lat": 10.7353,
+        "lng": 106.7182,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
+    },
+    {
+        "id": 10,
+        "name": "Điểm đặt máy Botol – Chung cư Nguyễn Ngọc Phương",
+        "address": "66 Nguyễn Ngọc Phương, P.19",
+        "lat": 10.8223,
+        "lng": 106.6838,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
+    },
+    {
+        "id": 11,
+        "name": "Điểm đặt máy Botol – Đại học Kinh tế TP HCM (cơ sở B)",
+        "address": "279 Đ. Nguyễn Tri Phương, P.5",
+        "lat": 10.7623,
+        "lng": 106.6784,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
+    },
+    {
+        "id": 12,
+        "name": "Điểm đặt máy Botol – Viettel Tower",
+        "address": "285 Đ. Cách Mạng Tháng 8, P.12",
+        "lat": 10.7843,
+        "lng": 106.6542,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
+    },
+    {
+        "id": 13,
+        "name": "Điểm đặt máy Botol – AEON MALL Tân Phú",
+        "address": "30 Đ. Tân Thắng, Sơn Kỳ",
+        "lat": 10.8067,
+        "lng": 106.6132,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
+    },
+    {
+        "id": 14,
+        "name": "Điểm đặt máy Botol – Ministop Celedon City",
+        "address": "Chung cư Diamond Alnata Plus, đường N1, P.Sơn Kỳ, Tân Phú",
+        "lat": 10.8089,
+        "lng": 106.6173,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
+    },
+    {
+        "id": 15,
+        "name": "Điểm đặt máy Botol – Family Mart Nguyễn Khắc Nhu",
+        "address": "210B/1 Cô Bắc, P. Cô Giang",
+        "lat": 10.7623,
+        "lng": 106.6875,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
+    },
+    {
+        "id": 16,
+        "name": "Điểm đặt máy Botol – Đại học Kinh tế TP HCM (cơ sở Bình Chánh)",
+        "address": "Khu Chức Năng Số 15, Đô Thị Mới Nam Thành Phố, Phong Phú",
+        "lat": 10.7112,
+        "lng": 106.5934,
+        "openTime": "05:00",
+        "closeTime": "23:00",
+        "types": ["plastic"]
     }
 ]

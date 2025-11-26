@@ -159,7 +159,7 @@ body {
 .pill.active {
     background: var(--accent-green);
     border-color: var(--accent-green);
-    color: #000;
+    color: #ffffff;
     font-weight: 600;
 }
 
@@ -198,7 +198,8 @@ body {
 .card-title {
     font-size: 16px;
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 7px;
+    line-height: 1.45;
 }
 
 .card-distance {
@@ -213,7 +214,7 @@ body {
 .card-address {
     font-size: 13px;
     color: var(--text-secondary);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .card-status {
@@ -258,6 +259,31 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 16px;
+}
+.type-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+/* Filter pills - icon sizing */
+.pill span img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+/* Waste types pills - icon sizing */
+.waste-pill span img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+/* Map filter section - all icon */
+.filter-pills .pill:first-child img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
 }
 
 /* Map Area */
@@ -453,7 +479,7 @@ body {
 .waste-pill {
     padding: 10px 16px;
     background: var(--accent-green);
-    color: #000;
+    color: #ffffff;
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
@@ -522,6 +548,11 @@ body {
     opacity: 0;
     transform: translateY(8px);
     animation: fadeUp 360ms cubic-bezier(.2,.9,.2,1) both;
+}
+.location-card.selected .card-distance {
+    background: var(--accent-green);
+    color: #ffffff;
+    box-shadow: none;
 }
 
 .location-list .location-card:nth-child(1) { animation-delay: 260ms; }

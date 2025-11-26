@@ -9,15 +9,15 @@ let activeFilter = 'all';
 let routeLayer = null;
 
 const typeIcons = {
-    plastic: '🧴',
-    seafood: '🦐',
-    electronics: '📱',
-    paper: '📄'
+    plastic: '<img src="../images/map/plastic.png" alt="Nhựa" class="type-img">',
+    glass: '<img src="../images/map/glass.png" alt="Thủy tinh" class="type-img">',
+    electronics: '<img src="../images/map/elec.png" alt="Điện tử" class="type-img">',
+    paper: '<img src="../images/map/paper.png" alt="Giấy" class="type-img">'
 };
 
 const typeNames = {
     plastic: 'Nhựa',
-    seafood: 'Thủy tinh',
+    glass: 'Thủy tinh',
     electronics: 'Điện tử',
     paper: 'Giấy'
 };
@@ -99,7 +99,7 @@ function getUserLocation() {
 
 // Load locations from JSON
 function loadLocations() {
-    fetch('../../dataset/locations.json')
+    fetch('../../../dataset/location.json')
         .then(response => response.json())
         .then(data => {
             locations = data;
@@ -122,7 +122,7 @@ function loadLocations() {
                     lng: 106.7019,
                     openTime: "08:00",
                     closeTime: "17:00",
-                    types: ["plastic", "seafood", "paper"]
+                    types: ["plastic", "glass", "paper"]
                 },
                 {
                     id: 2,
@@ -162,7 +162,7 @@ function loadLocations() {
                     lng: 106.6678,
                     openTime: "08:00",
                     closeTime: "17:00",
-                    types: ["seafood", "electronics", "paper"]
+                    types: ["glass", "electronics", "paper"]
                 },
                 {
                     id: 6,
@@ -172,7 +172,7 @@ function loadLocations() {
                     lng: 106.6532,
                     openTime: "08:00",
                     closeTime: "20:00",
-                    types: ["plastic", "seafood"]
+                    types: ["plastic", "glass"]
                 },
                 {
                     id: 7,
@@ -192,7 +192,7 @@ function loadLocations() {
                     lng: 106.6672,
                     openTime: "07:00",
                     closeTime: "19:00",
-                    types: ["plastic", "seafood", "paper", "electronics"]
+                    types: ["plastic", "glass", "paper", "electronics"]
                 }
             ];
             calculateDistances();
@@ -356,12 +356,12 @@ function updateRightPanel() {
     
     const typesHtml = selectedLocation.types.map(type => `
         <span class="waste-pill">
-            <span>${typeIcons[type]}</span>
+            ${typeIcons[type]}
             ${typeNames[type]}
         </span>
     `).join('');
     document.getElementById('detailTypes').innerHTML = typesHtml;
-}
+    }
 
 // Get directions using OSRM (Open Source Routing Machine)
 async function getDirections() {
