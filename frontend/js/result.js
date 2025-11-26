@@ -302,7 +302,7 @@ function loadDisposalInstructions() {
         card.className = 'suggestion-card disposal';
         
         card.innerHTML = `
-            <div style="width: 60px; height: 60px; background: #374151; border-radius: 8px; padding: 15px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 72px; height: 72px; background: #45161B; border: 3px solid #FF0000; border-radius: 12px; padding: 8px; box-sizing: border-box; flex-shrink: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.45);">
                 <img src="${item.icon}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <div class="suggestion-content">
