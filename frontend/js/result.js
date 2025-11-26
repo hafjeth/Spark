@@ -1,6 +1,5 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    
     // ===== INITIALIZE ELEMENTS =====
     initElements();
     
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ===== LOAD RESULT DATA =====
     loadResultData();
-    
 });
 
 // ===== GLOBAL VARIABLES =====
@@ -26,6 +24,9 @@ let resultButton;
 let resultCard;
 let suggestionsTitle;
 let suggestionsContainer;
+
+// 🔗 URL backend của bạn
+const API_URL = "http://127.0.0.1:8000/classify-trash";
 
 // ===== FUNCTION: Initialize Elements =====
 function initElements() {
@@ -61,6 +62,7 @@ function setupEventListeners() {
     
     // File input
     if (fileInput) {
+        // 👇 cho phép dùng async/await bên trong
         fileInput.addEventListener('change', handleFileReupload);
     }
 }
@@ -75,104 +77,118 @@ function handleReuploadClick() {
     fileInput.click();
 }
 
-// ...existing code...
+// ===== FUNCTION: Map model class_id -> tên tiếng Việt =====
+function mapModelClassToWasteCategory(classId) {
+    if (!classId) return 'Rác tái chế';
 
-// ===== FUNCTION: Handle File Reupload =====
-function handleFileReupload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        // Validate file
-        const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
-        const maxSize = 5 * 1024 * 1024; // 5MB
-        
-        if (!validTypes.includes(file.type)) {
-            alert('Vui lòng chọn file ảnh (JPG, PNG, WEBP)');
-            return;
-        }
-        
-        if (file.size > maxSize) {
-            alert('Kích thước file không được vượt quá 5MB');
-            return;
-        }
-        
-        // Convert file to base64
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const imageData = e.target.result;
-            
-            // Get new mock result (simulate AI processing)
-            const mockResult = getMockClassificationResult();
-            
-            // Update sessionStorage with new data
-            sessionStorage.setItem('uploadedImage', imageData);
-            sessionStorage.setItem('classificationResult', JSON.stringify(mockResult));
-            
-            // Reload result on current page
-            loadResultData();
-        };
-        reader.readAsDataURL(file);
+    switch (classId.toLowerCase()) {
+        case 'battery':
+            return 'Pin';
+        case 'biological':
+            return 'Rác hữu cơ';
+        case 'bottle':
+            return 'Chai nhựa';
+        case 'cardboard':
+            return 'Bìa carton';
+        case 'clothes':
+            return 'Quần áo cũ';
+        case 'metal':
+            return 'Lon kim loại';
+        case 'paper':
+            return 'Giấy';
+        case 'shoes':
+            return 'Giày dép';
+        case 'trash':
+            return 'Rác thải tổng hợp';
+        case 'white-glass':
+            return 'Thủy tinh trắng';
+        default:
+            return classId; // fallback: giữ nguyên chuỗi gốc
     }
 }
 
-// ===== FUNCTION: Get Mock Classification Result (copy from classify.js) =====
-function getMockClassificationResult() {
-    const mockResults = [
-        {
-            type: 'recyclable',
-            wasteCategory: 'Chai nhựa PET',
-            confidence: 95,
-            suggestions: [
-                {
-                    image: '../images/suggestion-1.jpg',
-                    title: 'Làm đồ trang trí tại nhà',
-                    description: 'Biến chai nhựa cũ thành chậu cây, đèn lồng hoặc các vật dụng trang trí độc đáo khác.'
-                },
-                {
-                    image: '../images/suggestion-2.jpg',
-                    title: 'Làm đồ chơi cho trẻ em',
-                    description: 'Tạo các đồ chơi sáng tạo và an toàn từ chai nhựa để bé có thể vui chơi.'
-                },
-                {
-                    image: '../images/suggestion-3.jpg',
-                    title: 'Tái sử dụng làm bình tưới cây',
-                    description: 'Đục lỗ nhỏ ở nắp chai và sử dụng làm bình tưới cây tiện lợi.'
-                }
-            ]
-        },
-        {
-            type: 'non-recyclable',
-            wasteCategory: 'Vỏ chuối',
-            confidence: 92,
-            suggestions: []
-        },
-        {
-            type: 'recyclable',
-            wasteCategory: 'Lon nhôm',
-            confidence: 98,
-            suggestions: [
-                {
-                    image: '../images/suggestion-1.jpg',
-                    title: 'Tái chế tại trung tâm thu gom',
-                    description: 'Lon nhôm có thể tái chế 100% và tiết kiệm năng lượng đáng kể.'
-                },
-                {
-                    image: '../images/suggestion-2.jpg',
-                    title: 'Làm đồ thủ công',
-                    description: 'Biến lon nhôm thành các vật dụng trang trí hoặc đồ dùng hữu ích.'
-                },
-                {
-                    image: '../images/suggestion-3.jpg',
-                    title: 'Đổi lấy tiền tại điểm thu mua',
-                    description: 'Nhiều nơi thu mua lon nhôm cũ với giá hợp lý.'
-                }
-            ]
-        }
-    ];
-    
-    const randomIndex = Math.floor(Math.random() * mockResults.length);
-    return mockResults[randomIndex];
+// ===== FUNCTION: Map API result -> format frontend đang dùng =====
+function mapApiResultToFrontend(apiData) {
+    const wasteCategory = mapModelClassToWasteCategory(apiData.class_id);
+    const confidencePercent = Math.round((apiData.confidence || 0) * 100);
+
+    return {
+        type: apiData.recyclable ? 'recyclable' : 'non-recyclable',
+        wasteCategory: wasteCategory,
+        confidence: confidencePercent
+        // suggestions sẽ được load từ blog.json hoặc default, nên không cần gán ở đây
+    };
 }
 
+// ===== FUNCTION: Handle File Reupload =====
+async function handleFileReupload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validate file
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    
+    if (!validTypes.includes(file.type)) {
+        alert('Vui lòng chọn file ảnh (JPG, PNG, WEBP)');
+        return;
+    }
+    
+    if (file.size > maxSize) {
+        alert('Kích thước file không được vượt quá 5MB');
+        return;
+    }
+
+    // Hiển thị ảnh mới ngay lập tức (base64) + lưu vào sessionStorage
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const imageData = e.target.result;
+        sessionStorage.setItem('uploadedImage', imageData);
+        if (resultImage) {
+            resultImage.src = imageData;
+        }
+    };
+    reader.readAsDataURL(file);
+
+    // Gọi API backend để phân loại ảnh mới
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            console.error('API error status:', response.status);
+            let errMsg = 'Có lỗi khi phân loại rác. Vui lòng thử lại sau.';
+            try {
+                const err = await response.json();
+                if (err && err.detail) {
+                    errMsg = err.detail;
+                }
+            } catch (_) {}
+            alert(errMsg);
+            return;
+        }
+
+        const apiData = await response.json();
+        console.log('API result:', apiData);
+
+        const result = mapApiResultToFrontend(apiData);
+
+        // Lưu result mới vào sessionStorage
+        sessionStorage.setItem('classificationResult', JSON.stringify(result));
+
+        // Cập nhật UI với kết quả mới
+        displayResult(result);
+
+    } catch (error) {
+        console.error('Error calling API:', error);
+        alert('Không thể kết nối tới server. Vui lòng kiểm tra lại backend.');
+    }
+}
 
 // ===== FUNCTION: Load Result Data =====
 function loadResultData() {
@@ -212,6 +228,7 @@ function mapCategoryToKey(category) {
     const categoryMap = {
         'Vỏ hộp': 'vo_hop',
         'Hộp carton': 'vo_hop',
+        'Bìa carton': 'vo_hop',
         'Chai nhựa': 'chai_nhua',
         'Chai nhựa PET': 'chai_nhua',
         'Túi nhựa': 'tui_nhua',

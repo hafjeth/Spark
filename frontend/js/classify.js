@@ -1,3 +1,7 @@
+// ================== CONFIG BACKEND ==================
+const API_URL = "http://127.0.0.1:8000/classify-trash"; 
+// Nếu sau này deploy, đổi sang domain server của bạn
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -100,7 +104,7 @@ function validateFile(file) {
     return true;
 }
 
-// ===== FUNCTION: Process File =====
+// ===== FUNCTION: Process File (CALL BACKEND) =====
 function processFile(file) {
     console.log('Processing file:', file.name);
     
@@ -113,104 +117,129 @@ function processFile(file) {
     if (processingSection) {
         processingSection.classList.add('active');
     }
-    
-    // Convert file to base64
+
+    // Đọc ảnh thành base64 để mang qua result.html hiển thị
     const reader = new FileReader();
     reader.onload = function(e) {
         const imageData = e.target.result;
-        
-        // Simulate AI processing (3 seconds)
-        setTimeout(() => {
-            console.log('Processing complete');
-            
-            // Get mock result
-            const mockResult = getMockClassificationResult();
-            
-            // Store in sessionStorage
-            sessionStorage.setItem('uploadedImage', imageData);
-            sessionStorage.setItem('classificationResult', JSON.stringify(mockResult));
-            
-            // Navigate to result page
-            window.location.href = 'result.html';
-        }, 3000);
+
+        // Gọi API backend
+        classifyOnServer(file)
+            .then(apiData => {
+                console.log("API response:", apiData);
+
+                // Chuẩn hóa dữ liệu cho result.html
+                const classificationResult = buildResultFromApi(apiData);
+
+                // Lưu vào sessionStorage
+                sessionStorage.setItem('uploadedImage', imageData);
+                sessionStorage.setItem('classificationResult', JSON.stringify(classificationResult));
+
+                // Điều hướng sang trang kết quả
+                window.location.href = 'result.html';
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Có lỗi khi phân loại rác. Vui lòng thử lại sau.");
+
+                // Nếu lỗi, cho phép người dùng upload lại
+                if (uploadBox) {
+                    uploadBox.style.display = 'block';
+                }
+                if (processingSection) {
+                    processingSection.classList.remove('active');
+                }
+            });
     };
     reader.readAsDataURL(file);
 }
 
-// ===== FUNCTION: Get Mock Classification Result =====
-function getMockClassificationResult() {
-    const mockResults = [
-        {
-            type: 'recyclable',
-            wasteCategory: 'Chai nhựa PET',
-            confidence: 95,
-            suggestions: [
-                {
-                    image: '../images/suggestion-1.jpg',
-                    title: 'Làm đồ trang trí tại nhà',
-                    description: 'Biến chai nhựa cũ thành chậu cây, đèn lồng hoặc các vật dụng trang trí độc đáo khác.'
-                },
-                {
-                    image: '../images/suggestion-2.jpg',
-                    title: 'Làm đồ chơi cho trẻ em',
-                    description: 'Tạo các đồ chơi sáng tạo và an toàn từ chai nhựa để bé có thể vui chơi.'
-                },
-                {
-                    image: '../images/suggestion-3.jpg',
-                    title: 'Tái sử dụng làm bình tưới cây',
-                    description: 'Đục lỗ nhỏ ở nắp chai và sử dụng làm bình tưới cây tiện lợi.'
-                }
-            ]
-        },
-        {
-            type: 'non-recyclable',
-            wasteCategory: 'Vỏ chuối',
-            confidence: 92,
-            suggestions: [
-                {
-                    icon: '../images/trash-icon.png',
-                    title: 'Bỏ vào thùng rác chung',
-                    description: 'Đảm bảo rác được đóng gói kỹ càng để tránh rơi vãi, làm bẩn hoặc gây mùi hôi.'
-                },
-                {
-                    icon: '../images/warning-icon.png',
-                    title: 'Không trộn lẫn với rác tái chế',
-                    description: 'Vỏ chuối là rác hữu cơ nên không thể tái chế lại với các vật liệu như nhựa, giấy.'
-                },
-                {
-                    icon: '../images/compost-icon.png',
-                    title: 'Cân nhắc ủ phân hữu cơ',
-                    description: 'Nếu có điều kiện, bạn có thể ủ phân compost tại nhà để giảm rác thải.'
-                }
-            ]
-        },
-        {
-            type: 'recyclable',
-            wasteCategory: 'Lon nhôm',
-            confidence: 98,
-            suggestions: [
-                {
-                    image: '../images/suggestion-1.jpg',
-                    title: 'Tái chế tại trung tâm thu gom',
-                    description: 'Lon nhôm có thể tái chế 100% và tiết kiệm năng lượng đáng kể.'
-                },
-                {
-                    image: '../images/suggestion-2.jpg',
-                    title: 'Làm đồ thủ công',
-                    description: 'Biến lon nhôm thành các vật dụng trang trí hoặc đồ dùng hữu ích.'
-                },
-                {
-                    image: '../images/suggestion-3.jpg',
-                    title: 'Đổi lấy tiền tại điểm thu mua',
-                    description: 'Nhiều nơi thu mua lon nhôm cũ với giá hợp lý.'
-                }
-            ]
-        }
-    ];
-    
-    // Random select
-    const randomIndex = Math.floor(Math.random() * mockResults.length);
-    return mockResults[randomIndex];
+// ===== FUNCTION: CALL BACKEND API =====
+async function classifyOnServer(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch(API_URL, {
+        method: "POST",
+        body: formData
+    });
+
+    if (!res.ok) {
+        let detail = "Lỗi khi gọi API phân loại.";
+        try {
+            const err = await res.json();
+            if (err.detail) detail = err.detail;
+        } catch (e) {}
+        throw new Error(detail);
+    }
+
+    // data: { class_id, confidence, recyclable }
+    return await res.json();
+}
+
+// ===== FUNCTION: BUILD RESULT OBJECT CHO result.html =====
+function buildResultFromApi(data) {
+    const viName = mapClassToVietnamese(data.class_id);
+    const confidencePercent = Math.round((data.confidence || 0) * 100);
+
+    const type = data.recyclable ? "recyclable" : "non-recyclable";
+
+    // Bạn có thể đọc suggestions từ blog.json, ở đây mình để example cứng
+    let suggestions = [];
+
+    if (type === "recyclable") {
+        suggestions = [
+            {
+                image: '../images/suggestion-1.jpg',
+                title: 'Tái chế sáng tạo tại nhà',
+                description: 'Sử dụng ' + viName.toLowerCase() + ' để làm đồ trang trí, chậu cây hoặc vật dụng hữu ích.'
+            },
+            {
+                image: '../images/suggestion-2.jpg',
+                title: 'Mang đến điểm thu gom tái chế',
+                description: 'Đem ' + viName.toLowerCase() + ' đến các điểm thu gom rác tái chế gần bạn.'
+            }
+        ];
+    } else {
+        suggestions = [
+            {
+                icon: '../images/trash-icon.png',
+                title: 'Bỏ đúng thùng rác quy định',
+                description: 'Đảm bảo rác được đóng gói kín, không làm rơi vãi, gây mùi hôi.'
+            },
+            {
+                icon: '../images/warning-icon.png',
+                title: 'Không trộn với rác tái chế',
+                description: viName + ' không phù hợp để tái chế, hãy tách riêng khỏi giấy, nhựa, kim loại.'
+            }
+        ];
+    }
+
+    return {
+        type: type,
+        wasteCategory: viName,
+        confidence: confidencePercent,
+        classId: data.class_id,
+        suggestions: suggestions
+    };
+}
+
+// ===== FUNCTION: MAP class_id → TIẾNG VIỆT =====
+function mapClassToVietnamese(classId) {
+    const mapping = {
+        Bottle: "Chai / chai nhựa / chai thủy tinh",
+        "white-glass": "Thủy tinh trắng",
+        trash: "Rác thải chung",
+        shoes: "Giày dép",
+        paper: "Giấy",
+        metal: "Kim loại",
+        clothes: "Quần áo",
+        cardboard: "Bìa carton",
+        biological: "Rác hữu cơ",
+        Battery: "Pin"
+    };
+
+    return mapping[classId] || classId;
 }
 
 // ===== FUNCTION: Handle Drag Over =====
