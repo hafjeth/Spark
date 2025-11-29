@@ -1,13 +1,15 @@
 import numpy as np
+import os
 from keras.models import load_model
 from PIL import Image
 
 # ==== 1. Cấu hình ====
-MODEL_PATH = "trash_classifier.keras"   # đúng tên file bạn đã save trong notebook
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(SCRIPT_DIR, "trash_classifier.keras")
 IMG_SIZE = 224
 
 # Điền đúng thứ tự từ `print(classes)`
-CLASS_NAMES = ['battery', 'biological', 'Bottle', 'cardboard', 'clothes', 'metal', 'paper', 'shoes', 'trash', 'white-glass']
+CLASS_NAMES = ['battery', 'biological', 'Bottle', 'cardboard', 'clothes', 'metal', 'paper','Plastic-bag' 'shoes', 'trash', 'white-glass']
 
 # ==== 2. Load model ====
 model = load_model(MODEL_PATH, compile=False)
