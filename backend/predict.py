@@ -10,6 +10,7 @@ IMG_SIZE = 224
 
 # Điền đúng thứ tự từ `print(classes)`
 CLASS_NAMES = ['battery', 'biological', 'Bottle', 'cardboard', 'clothes', 'metal', 'paper','Plastic-bag' 'shoes', 'trash', 'white-glass']
+CLASS_NAMES = ['battery', 'biological', 'Bottle', 'cardboard', 'clothes', 'metal', 'paper','Plastic-bag', 'shoes', 'trash', 'white-glass']
 
 # ==== 2. Load model ====
 model = load_model(MODEL_PATH, compile=False)
