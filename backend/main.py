@@ -14,7 +14,7 @@ RECYCLABLE_TYPES = {
     "metal",
     "paper",
     "white-glass",
-
+    "Plastic-bag"
 }
 
 app = FastAPI(

@@ -216,7 +216,7 @@ GET /recyclable-types
 Response:
 ```json
 {
-  "recyclable_types": ["bottle", "paper", "cardboard", "clothes", "plastic", "metal", "glass"],
+  "recyclable_types": ["bottle", "paper", "cardboard", "clothes", "Plastic-bag", "metal", "glass"],
   "count": 7
 }
 ```
@@ -315,6 +315,7 @@ Solution:
 8. Cardboard
 9. Biological Waste
 10. Battery
+11. Plastic bag
 
 ### Recyclable Categories
 
@@ -322,7 +323,7 @@ Solution:
 - Paper
 - Cardboard
 - Clothes
-- Plastic
+- Plastic bag
 - Metal
 - Glass
 
