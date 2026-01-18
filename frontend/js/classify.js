@@ -236,7 +236,8 @@ function mapClassToVietnamese(classId) {
         clothes: "Quần áo",
         cardboard: "Bìa carton",
         biological: "Rác hữu cơ",
-        Battery: "Pin"
+        Battery: "Pin",
+        "Plastic-bag": "Túi nhựa",
     };
 
     return mapping[classId] || classId;

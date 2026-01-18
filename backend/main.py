@@ -145,6 +145,7 @@ async def classify_trash(file: UploadFile = File(...)):
         return {
             "success": True,
             "class_id": class_id_str,
+            "wasteCategory": class_id_str,  # ✅ Thêm dòng này
             "confidence": confidence_float,
             "recyclable": recyclable,
             "message": message
