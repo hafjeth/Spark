@@ -21,16 +21,16 @@ print("="*60)
 
 try:
     clip_model, clip_preprocess = clip.load(CLIP_MODEL_NAME, device=DEVICE)
-    print(f"✅ Đã tải CLIP model ({CLIP_MODEL_NAME})")
+    print(f"Đã tải CLIP model ({CLIP_MODEL_NAME})")
 except Exception as e:
-    print(f"❌ Lỗi tải CLIP model: {e}")
+    print(f"Lỗi tải CLIP model: {e}")
     clip_model = None
 
 try:
     svm_model = joblib.load(MODEL_PATH)
-    print("✅ Đã tải mô hình SVM (clip-model.joblib)")
+    print("Đã tải mô hình SVM (clip-model.joblib)")
 except Exception as e:
-    print(f"❌ Lỗi tải SVM: {e}")
+    print(f"Lỗi tải SVM: {e}")
     svm_model = None
 
 # ==== 3. Hàm trích xuất đặc trưng CLIP ====
@@ -78,7 +78,7 @@ def predict_image(pil_image: Image.Image):
         return class_name, confidence
         
     except Exception as e:
-        print(f"❌ Lỗi dự đoán: {e}")
+        print(f"Lỗi dự đoán: {e}")
         import traceback
         traceback.print_exc()
         return "Lỗi dự đoán", 0.0
